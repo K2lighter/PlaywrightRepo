@@ -7,14 +7,13 @@ url = "https://gymlog.ru/profile/login/"
 def test_request(page: Page):
     """Проверка валидации бэкенда после подмены данных в фронте"""
     def change_request(route: Route):
-        """Подмена данных фронтовой валидации"""
+        """Подмена данных во фронтовой"""
         data = route.request.post_data
         print(data)
         if data:
             data = data.replace("User415", "pudinglor")
 
         route.continue_(post_data=data)
-
     page.route(re.compile('profile/authenticate/'), change_request)  # ловим запрос
     page.goto(url)
     page.locator('#email').fill("User415")
